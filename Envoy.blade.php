@@ -94,7 +94,7 @@ git pull origin {{$branch}}
 @task('composer', ['on' => 'web'])
 
 cd {{$deploy_path}}
-{{ $composer }} update --optimize-autoloader --no-dev
+{{ $composer }} install --optimize-autoloader --no-dev
 {{ $composer }} dump-autoload -o
 
 @endtask
