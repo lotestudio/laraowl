@@ -20,7 +20,11 @@ class IntegrationService
 
         $title = '🚨 New '.strtoupper($issue->type).' Alert';
         $message = "*{$issue->title}*\n{$issue->message}";
-        $url = config('app.url')."/projects/{$issue->project->slug}/issues/{$issue->id}";
+
+        $issue->loadMissing('project.team');
+        $team_slug = $issue->project->team?->slug ?? 'projects';
+
+        $url = config('app.url')."/{$team_slug}/{$issue->project->slug}/issues/{$issue->id}";
 
         foreach ($integrations as $integration) {
             $this->send($integration, $title, $message, [
