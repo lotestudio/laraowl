@@ -15,18 +15,13 @@ class IntegrationService
      */
     public function notify(Issue $issue): void
     {
-        $issue->loadMissing('project.team');
-
         $project = $issue->project;
         $integrations = $project->integrations()->where('is_enabled', true)->get();
 
         $title = '🚨 New '.strtoupper($issue->type).' Alert';
         $message = "*{$issue->title}*\n{$issue->message}";
 
-        $teamSlug = $issue->project->team?->slug ?? 'projects';
-
-        $url = config('app.url')."/{$teamSlug}/{$issue->project->slug}/issues/{$issue->id}";
-        // $url = config('app.url')."/projects/{$issue->project->slug}/issues/{$issue->id}";
+        $url = config('app.url')."/{$project->team_slug}/{$issue->project->slug}/issues/{$issue->id}";
 
         foreach ($integrations as $integration) {
             $this->send($integration, $title, $message, [

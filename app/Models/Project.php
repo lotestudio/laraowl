@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Concerns\GeneratesUniqueProjectSlugs;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -116,4 +117,15 @@ class Project extends Model implements HasMedia
     {
         return $this->hasMany(Heartbeat::class);
     }
+
+    protected function teamSlug(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                $this->loadMissing('team:slug');
+                return $this->team?->slug ?? 'projects';
+            }
+        );
+    }
+
 }
