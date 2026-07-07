@@ -25,11 +25,7 @@ class IntegrationService
 
         $teamSlug = $issue->project->team?->slug ?? 'projects';
 
-        Log::info('teamSlug: '.$teamSlug);
-
         $url = config('app.url')."/{$teamSlug}/{$issue->project->slug}/issues/{$issue->id}";
-
-        Log::info('url: '.$url);
         // $url = config('app.url')."/projects/{$issue->project->slug}/issues/{$issue->id}";
 
         foreach ($integrations as $integration) {
