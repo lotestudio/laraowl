@@ -150,7 +150,7 @@ class CheckProjectUptime extends Command
                         'URL' => $project->url,
                         'Status' => 'UP',
                     ],
-                    config('app.url')."/projects/{$project->slug}"
+                    config('app.url')."/{$project->team_slug}/{$project->slug}"
                 );
             }
         }

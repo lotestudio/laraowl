@@ -122,7 +122,7 @@ class Project extends Model implements HasMedia
     {
         return Attribute::make(
             get: function () {
-                $this->loadMissing('team:slug');
+                $this->loadMissing('team:id,slug');
                 return $this->team?->slug ?? 'projects';
             }
         );

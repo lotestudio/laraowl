@@ -30,7 +30,7 @@ class AlertService
 
         $title = '🚨 New Exception: '.$issue->title;
         $message = $issue->message;
-        $url = config('app.url')."/projects/{$project->slug}/issues/{$issue->id}";
+        $url = config('app.url')."/{$project->team_slug}/{$project->slug}/issues/{$issue->id}";
         $fields = [
             'Project' => $project->name,
             'Type' => $issue->type,
@@ -56,7 +56,7 @@ class AlertService
 
         $title = '⏱️ High Latency: '.$issue->title;
         $message = $issue->message;
-        $url = config('app.url')."/projects/{$project->slug}/issues/{$issue->id}";
+        $url = config('app.url')."/{$project->team_slug}/{$project->slug}/issues/{$issue->id}";
         $fields = [
             'Project' => $project->name,
             'Priority' => strtoupper($issue->priority),
@@ -80,7 +80,7 @@ class AlertService
 
         $title = '🚨 Uptime Alert: Site is DOWN!';
         $message = "The site returned a {$statusCode} status code.".($error ? "\nError: {$error}" : '');
-        $url = config('app.url')."/projects/{$project->slug}";
+        $url = config('app.url')."/{$project->team_slug}/{$project->slug}";
         $fields = [
             'Project' => $project->name,
             'URL' => $project->url,
@@ -106,7 +106,7 @@ class AlertService
 
         $title = '💓 Heartbeat Failure: '.$heartbeat->name;
         $message = "The heartbeat '{$heartbeat->name}' has stopped checking in.";
-        $url = config('app.url')."/projects/{$project->slug}";
+        $url = config('app.url')."/{$project->team_slug}/{$project->slug}";
         $fields = [
             'Project' => $project->name,
             'Last Seen' => $heartbeat->last_seen_at ? $heartbeat->last_seen_at->diffForHumans() : 'Never',
@@ -130,7 +130,7 @@ class AlertService
 
         $title = '🔥 Error Spike Detected!';
         $message = "Detected {$count} errors in the last {$windowMinutes} minutes.";
-        $url = config('app.url')."/projects/{$project->slug}";
+        $url = config('app.url')."/{$project->team_slug}/{$project->slug}";
         $fields = [
             'Project' => $project->name,
             'Spike Count' => $count,
